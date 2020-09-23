@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from twitchapi import is_live
+import asyncio
 
 bot = commands.Bot(command_prefix='')
 
@@ -9,7 +10,7 @@ live = []
 
 async def check_live():
     await bot.wait_until_ready() # ensures cache is loaded
-    while not bot.is_closed():
+    while not bot.is_closed:
         for strim_num in range(len(streamers)):
             strim = streamers[strim_num]
             strimer = strim[0]
@@ -17,7 +18,7 @@ async def check_live():
             if streaming:
                 if strimer not in live:
                     live.append(strimer)
-                    await strim[1].send(f"{strimer} is live!")
+                    await bot.send_message(bot.get_channel(strim[1]), f"{strimer} is live!")
             elif strimer in live:
                 live.remove(strimer)
 
@@ -25,7 +26,7 @@ async def check_live():
 
 @bot.event
 async def on_ready():
-    print(f'Logged in as {client.user.name} with id {client.user.id}')
+    print(f'Logged in as {bot.user.name} with id {bot.user.id}')
     bot.loop.create_task(check_live())
 
 @bot.event
@@ -36,11 +37,12 @@ async def on_message(message):
     if len([member for member in message.mentions if member.name == 'Frog210']) > 0:
         await message.channel.send('🐸')
     if 'frog' in message.content.lower():
-        await message.add_reaction('🐸')
+        await bot.add_reaction(message, '🐸')
 
-    if 'setStreamer' in message:
-        if len(message.split()) == 2 and message.member.hasPermission("MUTE_MEMBERS"):
-            streamers.append([message.split()[1], message.channel])
+    if 'setStreamer' in message.content:
+        if len(message.content.split()) == 2 and message.author.server_permissions.administrator:
+            streamers.append([message.content.split()[1], message.channel.id])
+            await bot.add_reaction(message, '🐸')
             print(streamers)
 
-bot.run('token redacted')
+bot.run('redacted')
