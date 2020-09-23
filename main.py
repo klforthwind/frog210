@@ -17,7 +17,8 @@ async def check_live():
             if streaming:
                 if strimer not in live:
                     live.append(strimer)
-                    await strim[1].send(f"{} is live!"%strimer)
+                    msg = f"{strimer} is live!"
+                    await strim[1].send(msg)
             elif strimer in live:
                 live.remove(strimer)
 
