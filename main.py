@@ -17,8 +17,7 @@ async def check_live():
             if streaming:
                 if strimer not in live:
                     live.append(strimer)
-                    msg = f"{strimer} is live!"
-                    await strim[1].send(msg)
+                    await strim[1].send(f"{strimer} is live!")
             elif strimer in live:
                 live.remove(strimer)
 
@@ -26,7 +25,7 @@ async def check_live():
 
 @client.event
 async def on_ready():
-    print(f'Logged in as {} with id {}'%(client.user.name, str(client.user.id)))
+    print(f'Logged in as {client.user.name} with id {client.user.id}')
     client.loop.create_task(check_live())
 
 @bot.event
