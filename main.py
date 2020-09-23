@@ -8,8 +8,8 @@ streamers = list()
 live = []
 
 async def check_live():
-    await client.wait_until_ready() # ensures cache is loaded
-    while not client.is_closed():
+    await bot.wait_until_ready() # ensures cache is loaded
+    while not bot.is_closed():
         for strim_num in range(len(streamers)):
             strim = streamers[strim_num]
             strimer = strim[0]
@@ -23,17 +23,17 @@ async def check_live():
 
         await asyncio.sleep(60)
 
-@client.event
+@bot.event
 async def on_ready():
     print(f'Logged in as {client.user.name} with id {client.user.id}')
-    client.loop.create_task(check_live())
+    bot.loop.create_task(check_live())
 
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
         return
     
-    if len([member for member in message.mentions if member.name == 'Frogbot']) > 0:
+    if len([member for member in message.mentions if member.name == 'Frog210']) > 0:
         await message.channel.send('🐸')
     if 'frog' in message.content.lower():
         await message.add_reaction('🐸')
