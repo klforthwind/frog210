@@ -1,11 +1,12 @@
 import discord
 from discord.ext import commands
-from twitchapi import is_live
+from twitchapi import is_live, video_info
 import asyncio
 
 bot = commands.Bot(command_prefix='')
 
-streamers = list()
+streamers = [
+]
 live = []
 
 async def check_live():
@@ -18,7 +19,13 @@ async def check_live():
             if streaming:
                 if strimer not in live:
                     live.append(strimer)
-                    await bot.send_message(bot.get_channel(strim[1]), f"{strimer} is live!")
+                    info = video_info(strimer)
+                    embed = discord.Embed(title=f"{strimer} is now live on Twitch!", description=info[0], url=info[1])
+                    embed.set_image(url=info[2])
+                    if strim_num == 0:
+                        await bot.send_message(bot.get_channel(strim[1]), f"{strimer} is live! <@&758132900427726869>", embed=embed)
+                    else:
+                        await bot.send_message(bot.get_channel(strim[1]), f"{strimer} is live!", embed=embed)
             elif strimer in live:
                 live.remove(strimer)
 
