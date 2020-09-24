@@ -46,7 +46,11 @@ client.on('message', message => {
 	if (message.author === client.user)
 		return;
 	
-	console.log(message.mentions);
+	if (message.mentions.has(client.user))
+		message.channel.send('🐸')
+	if (message.content.toLowerCase().includes('frog'))
+		message.react('🐸')
+
 });
 
 client.login('redacted');
