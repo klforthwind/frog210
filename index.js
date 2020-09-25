@@ -44,13 +44,13 @@ client.on('message', message => {
 	if (message.content.toLowerCase().includes('frog'))
 		message.react('🐸')
 
-	if (message.content.contains('setStreamer')) {
-		if (message.content.split(" ").length == 2 && message.author.server_permissions.administrator) {
-			streamers.append([message.content.split(" ")[1], message.channel.id])
-            console.log(streamers)
-            message.react('🐸')
-		}
-	}
+	// if (message.content.contains('setStreamer')) {
+	// 	if (message.content.split(" ").length == 2 && message.author.server_permissions.administrator) {
+	// 		streamers.append([message.content.split(" ")[1], message.channel.id])
+    //         console.log(streamers)
+    //         message.react('🐸')
+	// 	}
+	// }
 
 })
 
