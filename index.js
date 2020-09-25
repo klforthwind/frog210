@@ -19,29 +19,20 @@ let streamers = [
     ['Strawberry_Bunni', '702181654688694336'],
     ['TartChipmunk', '702181654688694336'],
 ]
-let live = []
 
 client.once('ready', () => {
 	console.log('Ready!');
 });
 
 client.on('ready', () => {
-	console.log(`Logged in as ${client.user.name} with id ${client.user.id}`)
-	// client.setInterval(() => {
+	console.log(`Logged in as Frog210 with id ${client.user.id}`)
+	client.setInterval(() => {
 		for (let s = 0; s < streamers.length; s++) {
 			let stream_info = streamers[s]
 			let streamer = stream_info[0]
-			let streaming = api.is_live(streamer);
-			if (streaming) {
-				if (live.indexOf(streamer) === -1) {
-					live.push(streamer)
-					let info = "ADwdwad"
-				}
-			} else if (live.indexOf(streamer) != -1) {
-				live.pop(live.indexOf(streamer))
-			}
+			api.notif_if_live(streamer, client.channels.cache.get(stream_info[1]), s)
 		}
-	// }, INTERVAL)
+	}, INTERVAL)
 })
 
 client.on('message', message => {
