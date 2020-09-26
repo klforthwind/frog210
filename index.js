@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const client = new Discord.Client({commandPrefix:''})
-const INTERVAL = 1 * 60 * 1000
+const INTERVAL = 5 * 60 * 1000
 const api = require("./api")
 
 let streamers = [
