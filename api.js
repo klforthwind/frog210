@@ -20,7 +20,11 @@ exports.notif_if_live = (streamer, channel, arrNum) => {
     got(path + streamer, options).then(resp => {
         let data = JSON.parse(resp.body)
         let streamer_data = data['data'][0]
-        let index = live.indexOf(streamer)
+        let index = -1;
+        for (let num = 0; num < live.length; num++) {
+            if (live[num][0] === streamer)
+                index = num
+        }
         if (streamer_data["is_live"]) {
             if (index === -1) {
                 live.push([streamer, 0])
