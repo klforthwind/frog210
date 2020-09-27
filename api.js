@@ -42,6 +42,8 @@ exports.notif_if_live = (streamer, channel, arrNum) => {
                 } else {
                     channel.send({embed:embed})
                 }
+            } else {
+                live[index][1] = 0
             }
         } else if (index !== -1) {
             if (live[index][1] > 4) {
